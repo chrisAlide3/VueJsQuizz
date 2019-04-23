@@ -34,7 +34,7 @@
                         <div class='col-xs-12 col-md-6 text-center'> 
                             <button class='btn btn-primary' 
                                     style='margin: 10px' 
-                                    @click='onAnswer(results[3])'>
+                                    @click='onAnswer(results[3]); nbrOfTries++'>
                                 {{ results[3]}}
                             </button> 
                         </div>
@@ -48,37 +48,34 @@
 export default {
     data() {
         return {
-            htmlQuestionString: "",
+            nbrOfTries: 0,
         }
     },
     props: ["results", "correctResult"],
     methods: {
         onAnswer(result) {
             if (result == this.correctResult) {
-                alert("correct");
                 this.$emit("answered", true);
             } else {
                 alert("Incorrect answer. Try again!");
             }
         }
     },
-    computed: {
-        htmlQuestion() {
-            for (let i=0; i<this.results.length; i++) {
-                if (i % 2 === 0) {
-                    let endRowDiv = "";
-                    if (i != 0) {
-                        endRowDiv = "</div>";
-                    };
-                    this.htmlQuestionString += endRowDiv + " <div class='row'> <div class='col-xs-12 col-md-6 text-center'> <button class='btn btn-primary' style='margin: 10px' @click='onAnswer(results[" + [i] + "])'> " +  this.results[i] + " </button> </div> ";
-                } else {
-                    this.htmlQuestionString += "<div class='col-xs-12 col-md-6 text-center'> <button class='btn btn-primary' style='margin: 10px' @click='onAnswer(results[" + [i] + "])'> " + this.results[i] + " </button> </div> ";
-                };
-            };
-                        console.log(this.htmlQuestionString);
-
-        }
-    },
+    // computed: {
+    //     htmlQuestion() {
+    //         for (let i=0; i<this.results.length; i++) {
+    //             if (i % 2 === 0) {
+    //                 let endRowDiv = "";
+    //                 if (i != 0) {
+    //                     endRowDiv = "</div>";
+    //                 };
+    //                 this.htmlQuestionString += endRowDiv + " <div class='row'> <div class='col-xs-12 col-md-6 text-center'> <button class='btn btn-primary' style='margin: 10px' @click='onAnswer(results[" + [i] + "])'> " +  this.results[i] + " </button> </div> ";
+    //             } else {
+    //                 this.htmlQuestionString += "<div class='col-xs-12 col-md-6 text-center'> <button class='btn btn-primary' style='margin: 10px' @click='onAnswer(results[" + [i] + "])'> " + this.results[i] + " </button> </div> ";
+    //             };
+    //         };
+    //     }
+    // },
 }
 </script>
 

@@ -20,7 +20,13 @@
 
   <!-- Game started -->
   <div v-if="isStarted" class="row">
-    <app-answer v-if="isAnswer"></app-answer>
+    <!-- Display Answer -->
+    <app-answer v-if="isAnswer"
+                :startGame="startGame">
+                <h3 slot="header">Correct Answer!</h3>
+                <p slot=header>'{{ nbr1 }}'  {{ operator}}  '{{nbr2}}' = '{{correctResult}}'</p>
+    </app-answer>
+    <!-- Display question -->
     <app-question v-else 
                     :results="possibleResults" 
                     :correctResult="correctResult"
@@ -49,8 +55,17 @@ export default {
     }
   },
   methods: {
+    initialise() {
+      this.nbr1 = 0;
+      this.nbr2 = 0;
+      this.operator = "",
+      this.correctResult = 0,
+      this.possibleResults = []
+    },
     startGame() {
+      this.initialise();
       this.isStarted = true;
+      this.isAnswer=false;
       this.generateQuestion();
       this.correctResult = this.getCorrectResult(this.nbr1, this.nbr2, this.operator);
       this.generatePossibleResults();

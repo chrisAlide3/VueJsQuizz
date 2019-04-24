@@ -2,7 +2,8 @@
     <div class="col-md-6 mx-auto text-center">
         <div class="card" style="width: 100%;">
             <div class="card-header">
-                <slot name="header"></slot>
+                <h3>Correct Answer!</h3>
+                <slot name="headerA"></slot>
             </div>
                 <div class="card-body mx-auto">
                     <button 
@@ -25,7 +26,8 @@ export default {
 
 <style scoped>
 .card {
-    background-color: lightgreen;
+    background-color: rgb(184, 246, 201);
+
 }
 p {
     font-weight: bold;

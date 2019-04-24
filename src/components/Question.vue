@@ -2,7 +2,7 @@
     <div class="col-6 mx-auto text-center">
         <div class="card" style="width: 100%;">
             <div class="card-header">
-                <slot name="header"></slot>
+                <slot name="headerQ">What's </slot>
             </div>
                 <div class="card-body mx-auto">
                     <!-- {{ htmlQuestion }}
@@ -55,7 +55,7 @@ export default {
     methods: {
         onAnswer(result) {
             if (result == this.correctResult) {
-                this.$emit("answered", true);
+                this.$emit("answered", "app-answer");
             } else {
                 alert("Incorrect answer. Try again!");
             }

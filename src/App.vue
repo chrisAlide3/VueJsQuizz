@@ -21,18 +21,28 @@
   <!-- Game started -->
   <div v-if="isStarted" class="row">
     <!-- Display Answer -->
-    <app-answer v-if="isAnswer"
+    <transition enter-active-class="animated flipInY"
+                leave-active-class="animated flipOutY" mode="out-in">
+      <component :is="selectedComponent" :results="possibleResults" :correctResult="correctResult"
+                                          @answered="selectedComponent = $event" 
+                                          :startGame="startGame">
+        <p slot="headerQ">What's {{"'"+nbr1 + "'  " + operator + "  '" + nbr2 + "'"}}</p>>
+        <p slot="headerA">{{"'"+nbr1 + "'  " + operator + "  '" + nbr2 + "' = " + correctResult}}</p>>
+
+      </component>
+    <!-- <app-answer v-if="isAnswer"
                 :startGame="startGame">
                 <h3 slot="header">Correct Answer!</h3>
                 <p slot=header>'{{ nbr1 }}'  {{ operator}}  '{{nbr2}}' = '{{correctResult}}'</p>
     </app-answer>
-    <!-- Display question -->
+    Display question
     <app-question v-else 
                     :results="possibleResults" 
                     :correctResult="correctResult"
-                    @answered="isAnswer = $event">
+                    @answered="selectedComponent = $event">
         <p slot="header">What's {{ "'"+nbr1 + "'  " + operator + "  '" + nbr2 + "'"}}?</p>
-      </app-question>
+      </app-question> -->
+    </transition>
   </div>
 </div>
 </template>
@@ -45,7 +55,7 @@ export default {
   data() {
     return {
       isStarted: false,
-      isAnswer: false,
+      selectedComponent: "",
       nbr1: 0,
       nbr2: 0,
       operator: "",
@@ -53,7 +63,7 @@ export default {
       correctResult: 0,
       possibleResults: []
     }
-  },
+  },  
   methods: {
     initialise() {
       this.nbr1 = 0;
@@ -65,7 +75,7 @@ export default {
     startGame() {
       this.initialise();
       this.isStarted = true;
-      this.isAnswer=false;
+      this.selectedComponent = "app-question";
       this.generateQuestion();
       this.correctResult = this.getCorrectResult(this.nbr1, this.nbr2, this.operator);
       this.generatePossibleResults();
@@ -114,6 +124,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.flip-enter-active {
+  animation: flip-in .5s ease-out forwards;
+}
+.flip-leave {
+  transform: rotateY(90deg)
+} 
+.flip-leave-active {
+  animation: flip-out .5s ease-out forwards;
+
+}
+@keyframes flip-in {
+  from {
+    transform: rotateY(0deg)
+  }
+  to {
+    transform: rotateY(90deg)
+  }
+}
+@keyframes flip-out {
+  from {
+    transform: rotateY(90deg)
+  }
+  to {
+    transform: rotateY(0deg)
+  }
+}
+
 
 </style>

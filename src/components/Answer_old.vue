@@ -2,13 +2,13 @@
     <div class="col-md-6 mx-auto text-center">
         <div class="card" style="width: 100%;">
             <div class="card-header">
-                <h3>Correct Answer in {{ nbrOfTries }}</h3>
-                <p> {{ answer }}</p>
+                <h3>Correct Answer!</h3>
+                <slot name="headerA"></slot>
             </div>
                 <div class="card-body mx-auto">
                     <button 
                             class="btn btn-primary"
-                            @click="nextQuestion">
+                            @click="startGame">
                         Next Question
                     </button>
                 </div>
@@ -19,14 +19,8 @@
 <script>
 export default {
     props: {
-        "answer": String,
-        "nbrOfTries": String,
+        "startGame": Function,
     },
-    methods: {
-        nextQuestion() {
-            this.$emit("continue", "app-question")
-        }
-    }
 }
 </script>
 

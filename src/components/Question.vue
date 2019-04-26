@@ -1,11 +1,9 @@
 <template>
-
     <div class="col-6 mx-auto text-center">
         <div class="card" style="width: 100%;">
             <div class="card-header">
                 <p>Hello {{signedInUser.name}}! Whats {{ question }}</p>
             </div>
-            <div>test</div>
                 <div class="card-body mx-auto">
                     <!-- {{ htmlQuestion }}
                     <span v-html="htmlQuestionString"></span> -->

@@ -68,13 +68,21 @@ export default {
     },
     // Vue-Router Guard
     beforeRouteEnter(to, from, next) {
-        console.log(this.$route.query)
-        if (this.$route.query.signedIn) {
+        let allowed = false;
+        next(vm => {
+            console.log(vm.$route.query.signedIn);
+            if (vm.$route.query) {
+                if (vm.$route.query.signedIn) {
+                    allowed = true;
+                } 
+            }
+        console.log(allowed);
+        if (allowed) {
             next();
         } else {
             next(false);
         }
-    },
+    })},
     methods: {
         onAnswer(result) {
             this.nbrOfTries++;

@@ -1,14 +1,11 @@
 <template>
 
     <div class="col-6 mx-auto text-center">
-        <div class="card" style="width: 100%;">
+        <div class="card" style="width: 100%; background-color: transparent">
             <div class="card-header">
                 <p>Hello {{signedInUser.name}}! Whats {{ question }}</p>
             </div>
-            <div>test</div>
                 <div class="card-body mx-auto">
-                    <!-- {{ htmlQuestion }}
-                    <span v-html="htmlQuestionString"></span> -->
                     <div class='row'> 
                         <div class='col-xs-12 col-md-6 text-center'> 
                             <button class='btn btn-primary' 
@@ -73,7 +70,7 @@ export default {
         onAnswer(result) {
             this.nbrOfTries++;
             if (result == this.correctResult) {
-                this.$emit("answered", "app-answer", this.answer, this.nbrOfTries);
+                this.$emit("answered", this.answer, this.nbrOfTries);
             } else {
                 alert("Incorrect answer. Try again!");
             }

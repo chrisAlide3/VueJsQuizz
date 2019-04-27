@@ -1,9 +1,6 @@
 <template>
     <div class="col-xs-12 col-sm-8 col-md-6 mx-auto">
         <h5>Please login</h5>
-        <small id="loginHelp" class="form-text text-muted">Don't have an account? 
-            <span style="color: blue; cursor: pointer" @click="switchMode">Register</span> here
-        </small>
         <div class="form-group">
             <label for="email">Email address</label>
             <input v-model="user.email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -13,7 +10,12 @@
             <label for="password">Password</label>
             <input v-model="user.password" type="password" class="form-control" id="password" placeholder="Password">
         </div>
-        <button @click.prevent="login" type="submit" class="btn btn-primary">login</button>
+        <button class="btn btn-primary mt-4" @click="login">login</button>
+
+        <small id="loginHelp" class="form-text"><strong>Don't have an account? </strong>
+            <router-link to="/register">Register</router-link>
+        </small>
+
     </div>
 </template>
 
@@ -28,14 +30,11 @@ export default {
             },
         };
     },
+
     props: {
         "users": Array,
     },
-    methods: {
-        switchMode() {
-            this.$emit("switchMode", "app-register");
-        },
-        
+    methods: {        
         login() {
             // Check if user valid
             let isEmailValid = false;
@@ -43,9 +42,11 @@ export default {
             for (let i=0; i<this.users.length; i++) {
                 if (this.users[i].email == this.user.email) {
                     isEmailValid = true;
-                    this.user.name = this.users[i].name;
                     if (this.users[i].password == this.user.password) {
                         isPasswordValid = true;
+                        this.user.name = this.users[i].name;
+                        this.user.email = this.users[i].email;
+                        this.user.password = this.users[i].password;
                         break;
                     } else {
                         isPasswordValid = false;

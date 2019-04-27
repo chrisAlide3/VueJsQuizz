@@ -9,7 +9,8 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  routes, // short for `routes: routes`
+  mode: "history"
 });
 
 Vue.http.options.root = 'https://vue-http-add0e.firebaseio.com/data.json';

@@ -1,16 +1,12 @@
 <template>
     <div class="col-md-6 mx-auto text-center">
-        <div class="card" style="width: 100%;">
+        <div class="card">
             <div class="card-header">
-                <h3>Correct Answer in {{ nbrOfTries }}</h3>
+                <h3>Correct Answer in {{ tries }}</h3>
                 <p> {{ answer }}</p>
             </div>
                 <div class="card-body mx-auto">
-                    <button 
-                            class="btn btn-primary"
-                            @click="nextQuestion">
-                        Next Question
-                    </button>
+                    <router-link to="/question" tag="button" class="btn btn-primary">Next Question</router-link>
                 </div>
         </div>
     </div>
@@ -20,20 +16,15 @@
 export default {
     props: {
         "answer": String,
-        "nbrOfTries": String,
+        "tries": String,
     },
-    methods: {
-        nextQuestion() {
-            this.$emit("continue", "app-question")
-        }
-    }
 }
 </script>
 
 <style scoped>
 .card {
-    background-color: rgb(184, 246, 201);
-
+    width: 100%;
+    background-color: transparent;
 }
 p {
     font-weight: bold;

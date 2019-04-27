@@ -1,44 +1,29 @@
 <template>
 <div class="container">
-  <div class="row">
-    <div class="col-sm text-center mx-auto mt-5"> 
-  <!-- Game started -->
-
-      <h1>The Super Quizz</h1>
-      <hr>
-    </div>
-  </div>
-
-  <div class="row">
-    <!-- Display Answer -->
-    <transition enter-active-class="animated flipInY"
-                leave-active-class="animated flipOutY" mode="out-in">
-      <component :is="mode"
-                @switchMode="switchMode($event)"
-                :users="users"
-                @userCreated="addUser($event)"
-                @loggedIn="loggedIn($event)"
-                :signedInUser="signedInUser"
-                @answered="(mode, answer, tries) => checkAnswer(mode, answer, tries)"
-                :answer = "this.answer"
-                :nbrOfTries = "this.tries"
-                @continue="switchMode($event)">
-      </component>
-    </transition>
-  </div>
+      <div id="quizzEl" class="col-xs-12 col-sm-8 ml-5">
+        <app-header></app-header>
+        <router-view  :users="users" 
+                      :signedInUser="signedInUser"
+                      :answer="answer"
+                      :tries="tries"
+                      @userCreated="addUser($event)"
+                      @loggedIn="loggedIn($event)"
+                      @answered="(answer, tries) => {checkAnswer(answer, tries)}">
+        </router-view>
+      </div>
 </div>
 </template>
+    <!-- <transition enter-active-class="animated flipInY"
+                leave-active-class="animated flipOutY" mode="out-in">
+    </transition> -->
 
 <script>
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Question from "./components/Question";
-import Answer from "./components/Answer";
+import Header from "./components/Header";
 
 export default {
   data() {
     return {
-      mode: "app-login",
+      isSignedIn: false,
       users: [],
       signedInUser: {
         name: "",
@@ -49,33 +34,26 @@ export default {
     }
   },  
   methods: {
-    switchMode(mode) {
-      this.mode = mode;
-    },
     addUser(user) {
       this.users.push(user);
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.mode = "app-question";
+      this.$router.push("/question")
     },
     loggedIn(user) {
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.mode = "app-question";
+      this.$router.push("/question");
+      // this.mode = "app-question";
     },
-    checkAnswer(mode, answer, tries) {
-      if (mode == "app-answer") {
-        this.mode = 'app-answer';
-        this.answer = answer;
+    checkAnswer(answer, tries) {
         if (tries == 1) {
           this.tries = tries + " try!";
         } else {
           this.tries = tries + " tries!";
-        }
-      } else {
-        alert("wrong answer");
-        this.mode = 'app-question'
-      }
+        };
+        this.answer = answer;
+        this.$router.push("/answer");
     }
   },
   created() {
@@ -90,19 +68,37 @@ export default {
                 dataArray.push(data[key]);
             };
             this.users = dataArray;
-            console.log(this.users[0]);
        })
   },
   components: {
-    "appLogin": Login,
-    "appRegister": Register,
-    "appQuestion": Question,
-    "appAnswer": Answer,
+    "appHeader": Header,
   },
 }
 </script>
 
+<style>
+  html,body {
+    height:100%;
+  }
+
+  div .container{
+    min-height: 100%;
+    position: relative;
+  }
+  #quizzEl {
+    background-image: url("./assets/background_jumbotron.jpg");
+    position:absolute; 
+    /* top:0; 
+    left: inherit; */
+    /* margin-left: auto; 
+    margin-right: auto;  */
+    height:100%;
+  }
+</style>
+
+
 <style scoped>
+
 .flip-enter-active {
   animation: flip-in .5s ease-out forwards;
 }
@@ -129,6 +125,5 @@ export default {
     transform: rotateY(0deg)
   }
 }
-
 
 </style>

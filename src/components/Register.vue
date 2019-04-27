@@ -1,9 +1,6 @@
 <template>
     <div class="col-xs-12 col-sm-8 col-md-6 mx-auto">
-        <h5>Please signup</h5>
-        <small id="signupHelp" class="form-text text-muted">Already have an account? 
-            <span style="color: blue; cursor: pointer" @click="switchMode">Login</span> here
-        </small>
+        <h5>Please register</h5>
         <div class="form-group">
             <label for="name">Name</label>
             <input v-model="user.name" type="text" class="form-control" id="name" placeholder="Name">
@@ -17,7 +14,13 @@
             <label for="password">Password</label>
             <input v-model="user.password" type="password" class="form-control" id="password" placeholder="Password">
         </div>
-        <button @click.prevent="register" type="submit" class="btn btn-primary">Register</button>
+
+        <button @click="register" class="btn btn-primary mt-3">Register</button>
+
+                <small id="signupHelp" class="form-text">Already have an account?
+                    <router-link to="/login">Login</router-link>
+        </small>
+
     </div>
 </template>
 
@@ -26,7 +29,6 @@ export default {
     data() {
         return {
             user: {
-                userId: 0,
                 name: "",
                 email: "",
                 password: "",
@@ -45,20 +47,13 @@ export default {
                 if (this.users[i].email == this.user.email) {
                     alert("This email address is already registered. Please Login with it");
                     alreadyRegistered = true;
-                    this.switchMode();
+                    this.$router.push('/login');
                     break;
                 }; 
             };
             // Add user
             if (!alreadyRegistered) {
-                let userId = 0;
-                if (this.users.length == 0) {
-                    userId = 1;
-                } else {
-                    userId = this.users[this.users.length-1].id + 1;
-                }
-                this.user.id = userId;
-                this.$http.post("/"+userId, this.user)
+                this.$http.post("", this.user)
                     .then(response => {
                         if (response.status < 400 ) {
                             alert("Your account has been succesfully created!");

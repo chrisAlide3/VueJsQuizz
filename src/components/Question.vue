@@ -66,6 +66,15 @@ export default {
     created() {
         this.generateQuestion();
     },
+    // Vue-Router Guard
+    beforeRouteEnter(to, from, next) {
+        console.log(this.$route.query)
+        if (this.$route.query.signedIn) {
+            next();
+        } else {
+            next(false);
+        }
+    },
     methods: {
         onAnswer(result) {
             this.nbrOfTries++;

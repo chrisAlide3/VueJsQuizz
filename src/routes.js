@@ -6,8 +6,8 @@ import Answer from "./components/Answer.vue";
 
 export const routes = [
     { path: '/', component: Home, name: "home" },
-    { path: '/login', component: Login, name: "login"},
-    { path: '/register', component: Register, name: "register"},
-    { path: '/question', component: Question, name: "question"},
-    { path: '/answer', component: Answer, name: "answer"},
+    { path: '/login', component: Login, name: "login" },
+    { path: '/register', component: Register, name: "register" },
+    { path: '/question', component: Question, name: "question" },
+    { path: '/answer', component: Answer, name: "answer" },
 ];

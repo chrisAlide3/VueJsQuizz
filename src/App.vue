@@ -36,14 +36,16 @@ export default {
   methods: {
     addUser(user) {
       this.users.push(user);
+      this.isSignedIn = true;
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.$router.push("/question")
+      this.$router.push({path: "/question", query: { signedIn: this.isSignedIn } });
     },
     loggedIn(user) {
+      this.isSignedIn = true;
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.$router.push("/question");
+      this.$router.push({path: "/question", query: { signedIn: this.isSignedIn } });
       // this.mode = "app-question";
     },
     checkAnswer(answer, tries) {

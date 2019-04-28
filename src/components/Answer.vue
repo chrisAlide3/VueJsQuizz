@@ -6,7 +6,7 @@
                 <p> {{ answer }}</p>
             </div>
                 <div class="card-body mx-auto">
-                    <router-link to="/question" tag="button" class="btn btn-primary">Next Question</router-link>
+                    <button @click="nextQuestion" class="btn btn-primary">Next Question</button>
                 </div>
         </div>
     </div>
@@ -15,8 +15,25 @@
 <script>
 export default {
     props: {
+        "signedInUser": Object,
         "answer": String,
         "tries": String,
+    },
+    methods: {
+        nextQuestion() {
+            this.$router.push({path: "/question", query: {signedIn: true} })
+        }
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            if (!vm.signedInUser.email) {
+                next(from.path);
+            }
+
+            // if (!vm.$route.query.signedIn) {
+            //     next(from.path);
+            // }
+        });
     },
 }
 </script>

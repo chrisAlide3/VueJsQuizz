@@ -2,7 +2,7 @@
 <div class="container">
       <div id="quizzEl" class="col-xs-12 col-sm-8 ml-5">
         <app-header></app-header>
-        <router-view  :users="users" 
+        <router-view  :users="users"
                       :signedInUser="signedInUser"
                       :answer="answer"
                       :tries="tries"
@@ -23,7 +23,6 @@ import Header from "./components/Header";
 export default {
   data() {
     return {
-      isSignedIn: false,
       users: [],
       signedInUser: {
         name: "",
@@ -36,17 +35,14 @@ export default {
   methods: {
     addUser(user) {
       this.users.push(user);
-      this.isSignedIn = true;
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.$router.push({path: "/question", query: { signedIn: this.isSignedIn } });
+      this.$router.push("/question");
     },
     loggedIn(user) {
-      this.isSignedIn = true;
       this.signedInUser.email = user.email;
       this.signedInUser.name = user.name;
-      this.$router.push({path: "/question", query: { signedIn: this.isSignedIn } });
-      // this.mode = "app-question";
+      this.$router.push("/question");
     },
     checkAnswer(answer, tries) {
         if (tries == 1) {

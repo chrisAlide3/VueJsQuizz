@@ -72,10 +72,6 @@ export default {
             if (!vm.signedInUser.email) {
                 next(from.path);
             }
-
-            // if (!vm.$route.query.signedIn) {
-            //     next(from.path);
-            // }
         });
     },
     methods: {
